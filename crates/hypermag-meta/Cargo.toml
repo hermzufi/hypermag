@@ -1,0 +1,16 @@
+[package]
+name = "hypermag-meta"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Torrent metainfo and magnet URI parsing for hypermag"
+
+[dependencies]
+data-encoding.workspace = true
+hypermag-bencode.workspace = true
+sha1.workspace = true
+thiserror.workspace = true
+
+[lints]
+workspace = true

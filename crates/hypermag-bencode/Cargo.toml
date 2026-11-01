@@ -1,0 +1,13 @@
+[package]
+name = "hypermag-bencode"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Zero-copy bencode decoder and canonical encoder for hypermag"
+
+[dependencies]
+thiserror.workspace = true
+
+[lints]
+workspace = true

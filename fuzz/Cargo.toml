@@ -1,0 +1,36 @@
+[package]
+name = "hypermag-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+hypermag-bencode = { path = "../crates/hypermag-bencode" }
+hypermag-meta = { path = "../crates/hypermag-meta" }
+
+[[bin]]
+name = "bencode"
+path = "fuzz_targets/bencode.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "metainfo"
+path = "fuzz_targets/metainfo.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "magnet"
+path = "fuzz_targets/magnet.rs"
+test = false
+doc = false
+bench = false
+
+[workspace]

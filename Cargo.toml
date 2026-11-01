@@ -1,0 +1,33 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+exclude = ["fuzz"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT OR Apache-2.0"
+
+[workspace.dependencies]
+anyhow = "1"
+clap = { version = "4.5", features = ["derive"] }
+data-encoding = "2"
+serde_json = "1"
+sha1 = "0.10"
+thiserror = "2"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+hypermag-bencode = { path = "crates/hypermag-bencode" }
+hypermag-meta = { path = "crates/hypermag-meta" }
+hypermag-proto = { path = "crates/hypermag-proto" }
+hypermag-picker = { path = "crates/hypermag-picker" }
+hypermag-storage = { path = "crates/hypermag-storage" }
+hypermag-net = { path = "crates/hypermag-net" }
+hypermag-tracker = { path = "crates/hypermag-tracker" }
+hypermag-dht = { path = "crates/hypermag-dht" }
+hypermag-engine = { path = "crates/hypermag-engine" }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"

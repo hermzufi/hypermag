@@ -1,0 +1,13 @@
+[package]
+name = "hypermag-proto"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "BitTorrent peer wire protocol for hypermag"
+
+[dependencies]
+thiserror.workspace = true
+
+[lints]
+workspace = true

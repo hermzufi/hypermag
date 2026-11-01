@@ -1,0 +1,10 @@
+[package]
+name = "hypermag-tracker"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Tracker clients for hypermag"
+
+[lints]
+workspace = true
