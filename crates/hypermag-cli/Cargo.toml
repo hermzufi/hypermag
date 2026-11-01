@@ -12,6 +12,12 @@ path = "src/main.rs"
 
 [dependencies]
 anyhow.workspace = true
+hypermag-engine.workspace = true
+hypermag-tracker.workspace = true
+hypermag-net.workspace = true
+tokio.workspace = true
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "rustls-tls"] }
+urlencoding = "2"
 clap.workspace = true
 hypermag-meta.workspace = true
 serde_json.workspace = true

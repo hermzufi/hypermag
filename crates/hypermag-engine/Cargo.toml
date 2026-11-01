@@ -6,5 +6,16 @@ rust-version.workspace = true
 license.workspace = true
 description = "Swarm orchestration for hypermag"
 
+[dependencies]
+tokio.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+sha1.workspace = true
+hypermag-bencode.workspace = true
+hypermag-meta.workspace = true
+hypermag-proto.workspace = true
+hypermag-net.workspace = true
+hypermag-storage.workspace = true
+
 [lints]
 workspace = true

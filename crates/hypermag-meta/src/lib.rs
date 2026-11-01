@@ -553,6 +553,18 @@ fn percent_encode(input: &[u8]) -> String {
     out
 }
 
+/// Build Metainfo bytes from an info dict (for fetched metadata).
+pub fn metainfo_from_info(info_dict_bytes: &[u8]) -> Vec<u8> {
+    use std::collections::BTreeMap;
+    let mut root = BTreeMap::new();
+    // Reconstruct minimal torrent by re-parsing? Easier: wrap as dict
+    // Parse info dict
+    let info_val = hypermag_bencode::decode(info_dict_bytes)
+        .unwrap_or(hypermag_bencode::Value::Dict(BTreeMap::new()));
+    root.insert(&b"info"[..], info_val);
+    hypermag_bencode::encode(&hypermag_bencode::Value::Dict(root))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

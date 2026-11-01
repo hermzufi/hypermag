@@ -36,16 +36,60 @@ enum Command {
         #[arg(long)]
         json: bool,
     },
+    /// Download a torrent.
+    Download {
+        /// Path to .torrent file.
+        #[arg(long, conflicts_with = "magnet")]
+        path: Option<PathBuf>,
+        /// Magnet URI.
+        #[arg(long, conflicts_with = "path")]
+        magnet: Option<String>,
+        /// Peer address ip:port.
+        #[arg(long)]
+        peer: String,
+        /// Output directory.
+        #[arg(long)]
+        out: PathBuf,
+    },
 }
 
 fn main() -> Result<()> {
     init_tracing();
-    match Cli::parse().command {
-        Command::Inspect { path, files, json } => inspect(&path, files, json),
-        Command::Magnet { uri, json } => magnet(&uri, json),
-    }
+    let rt = tokio::runtime::Runtime::new()?;
+    rt.block_on(async move {
+        match Cli::parse().command {
+            Command::Inspect { path, files, json } => inspect(&path, files, json),
+            Command::Magnet { uri, json } => magnet(&uri, json),
+            Command::Download {
+                path,
+                magnet,
+                peer,
+                out,
+            } => {
+                if let Some(m) = magnet {
+                    return download_magnet_full(&m, &peer, &out).await;
+                }
+                if let Some(p) = path {
+                    return download(&p, &peer, &out).await;
+                }
+                anyhow::bail!("provide --path or --magnet")
+            }
+        }
+    })
 }
 
+async fn download(path: &Path, peer: &str, out: &Path) -> Result<()> {
+    let bytes =
+        std::fs::read(path).with_context(|| format!("failed to read {}", path.display()))?;
+    let dl = hypermag_engine::Downloader::new([0u8; 20]);
+    dl.download_one_peer(peer, &bytes, out)
+        .await
+        .map_err(|e| anyhow::anyhow!(e))?;
+    println!("done");
+    Ok(())
+}
+
+#[allow(unused_variables)]
 fn inspect(path: &Path, show_files: bool, json: bool) -> Result<()> {
     let bytes =
         std::fs::read(path).with_context(|| format!("failed to read {}", path.display()))?;
@@ -205,6 +249,14 @@ fn init_tracing() {
         .try_init();
 }
 
+async fn download_magnet_full(uri: &str, peer: &str, out: &Path) -> Result<()> {
+    let dl = hypermag_engine::Downloader::new([0u8; 20]);
+    dl.download_from_magnet(uri, peer, out)
+        .await
+        .map_err(|e| anyhow::anyhow!(e))?;
+    println!("done");
+    Ok(())
+}
 #[cfg(test)]
 mod tests {
     use super::human_bytes;

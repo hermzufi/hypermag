@@ -6,5 +6,13 @@ rust-version.workspace = true
 license.workspace = true
 description = "Peer transport for hypermag"
 
+[dependencies]
+tokio.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+bytes.workspace = true
+hypermag-proto.workspace = true
+hypermag-meta.workspace = true
+
 [lints]
 workspace = true

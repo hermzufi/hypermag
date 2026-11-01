@@ -50,7 +50,7 @@ warnings clean.
 
 - `crates/hypermag-bencode` — zero-copy bencode codec; spans for raw `info`.
 - `crates/hypermag-meta` — `.torrent`, magnet, info-hash v1/v2.
-- `crates/hypermag-proto` — peer wire codec (BEP 3/10); `crates/hypermag-storage` — piece/file layout + SHA-1 verify; `picker|net|tracker|engine|dht` — stubs (M1+).
+- `crates/hypermag-proto` — peer wire codec (BEP 3/10, fast/extended); `crates/hypermag-storage` — piece/file layout + SHA-1 verify; `crates/hypermag-net` — TCP dial/listen + handshake; `crates/hypermag-tracker` — HTTP announce with compact peers; `crates/hypermag-picker` — rarest-first piece picker; `crates/hypermag-engine` — single-peer download + swarm stats + seeding policy; `crates/hypermag-dht` — node id/bootstrap skeleton; advanced features (M5-M7) extended.
 - `crates/hypermag-cli` — `hypermag` binary; integration tests in `tests/cli.rs`.
 - `fuzz/` — separate Cargo workspace (excluded), targets bencode/meta/magnet.
 
